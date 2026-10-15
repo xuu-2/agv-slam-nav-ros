@@ -1,0 +1,65 @@
+<launch>
+    <arg name="scan_topic"  default="/scan" /> 
+    <arg name="base_frame"  default="base_footprint"/>
+    <arg name="odom_frame"  default="odom_combined"/>
+    <!-- <param name="use_sim_time" value="true"/> -->
+
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+        <param name="base_frame" value="$(arg base_frame)" />
+        <param name="odom_frame" value="$(arg odom_frame)" />
+        <param name="map_update_interval" value="0.005" />  <!--0.01-->
+        <param name="maxUrange" value="5.0" />
+        <param name="maxRange" value="15.0" />
+        <!-- 粒子滤波器中计算权重的标准差 -->
+        <param name="sigma" value="0.05" />
+        <!-- 平滑地图时使用的核大小 -->
+        <param name="kernelSize" value="1" />
+        <!-- 在地图中沿x轴和y轴的分辨率 -->
+        <param name="lstep" value="0.05" />
+        <param name="astep" value="0.05" />
+        <!-- 用于构建地图的迭代次数 -->
+        <param name="iterations" value="5" />
+        <!-- 激光雷达测量噪声的标准差 -->
+        <param name="lsigma" value="0.075" />
+        <!-- 控制粒子群更新权重的增益 -->
+        <param name="ogain" value="3.0" />
+        <!-- 激光雷达的扫描数量的参见，线数的裁剪
+        一圈的，降低这个，可以降低cpu运行压力
+        -->
+        <param name="use_sim_time" value="true"/>
+        <param name="lskip" value="0" />
+        <param name="minimumScore" value="30" />
+        <param name="srr" value="0.01" />
+        <param name="srt" value="0.02" />
+        <param name="str" value="0.01" />
+        <param name="stt" value="0.02" />
+        <!-- 机器人在5秒内移动了0.1m就会更新数据，但是如果五秒
+        内移动的距离很多个0.1m，那么地图的更新频率还是会变为一次，map_update_interval
+        这个的优先级是最高的
+        -->
+        <param name="linearUpdate" value="0.1" />
+        <!-- 机器人在5秒内转动了0.2弧度就会更新数据，但是如果五秒
+        内移动的距离很多个0.2弧度，那么地图的更新频率还是会变为一次，map_update_interval
+        这个的优先级是最高的
+        -->
+        <param name="angularUpdate" value="0.02" />
+        <param name="temporalUpdate" value="-1.0" />
+        <param name="resampleThreshold" value="0.25" />
+        <param name="particles" value="8" />
+
+        <!-- 定义地图的边界 -->
+        <param name="xmin" value="-10.0" />
+        <param name="ymin" value="-10.0" />
+        <param name="xmax" value="10.0" />
+        <param name="ymax" value="10.0" />
+
+        <!-- 地图分辨率的增量 -->
+        <param name="delta" value="0.05" />
+        <param name="llsamplerange" value="0.01" />
+        <param name="llsamplestep" value="0.01" />
+        <param name="lasamplerange" value="0.005" />
+        <param name="lasamplestep" value="0.005" />
+        <remap from="scan" to="$(arg scan_topic)" />
+    </node>
+</launch>
+

@@ -1,0 +1,23 @@
+<launch>   
+    <node pkg="car_top" type="car_top" name="car_top">
+    <param name="Vz_bias"    type="double"  value="0.1"/>
+    </node>
+
+    <include file="$(find car_top)/launch/include/base_serial.launch" >
+    </include>
+        <!-- 将3D点云转换成2D -->
+    <include file = "$(find pointcloud_to_laserscan)/launch/point_to_scan.launch">
+    </include>
+
+    <!-- 开启IMU控制节点发布imu的TF变换 -->
+    <include file = "$(find wit_ros_imu)/launch/display_and_imu.launch">     
+    </include>
+
+    <include file="$(find car_top)/launch/include/read_map.launch">
+    </include>
+
+    <!-- <include file="$(find cartographer_ros)/launch/demo_backpack_3d_localization.launch">
+    </include> -->
+      <!-- <node name="rviz" pkg="rviz" type="rviz" required="true"
+    args="-d $(find nav)/rviz/record_trac.rviz" /> -->
+</launch>

@@ -1,0 +1,38 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_footprint
+  update_frequency: 1.0
+  publish_frequency: 1.0
+  transform_tolerance: 1.0
+  resolution: 0.05
+  footprint: [[0.45,-0.34],[0.45,0.34],[-0.45,-0.34],[-0.45,0.34]]  #车体坐标，以车正中心为坐标0点分别为左上角、右上角、左下角、右下角坐标 m
+  inflation_layer:
+   inflation_radius: 0.75        #代价地图膨胀距离 m 一般为车体宽度一半+离障碍物距离
+  plugins:
+    - {name: static_layer, type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+
+  static_layer:
+    enabled: true
+    map_topic: /map
+
+  obstacle_layer:
+    enabled: true
+    obstacle_range: 2.5
+    raytrace_range: 3.0
+    track_unknown_space: false
+    observation_sources: scan
+    scan:
+      sensor_frame: rslidar
+      data_type: LaserScan
+      topic: /scan
+      marking: true
+      clearing: true
+      inf_is_valid: true
+
+  inflation_layer:
+    enabled: true
+    cost_scaling_factor: 10
+    inflation_radius: 0.4
+

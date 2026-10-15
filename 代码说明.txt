@@ -1,0 +1,20 @@
+agv.sh：AGV运行脚本
+rslidar_sdk  三维雷达功能包
+car_top cartographer_movebase   数据融合
+cartographer_ros demo_backpack_3d_localization  3D空间定位
+nav move_base 打点导航
+
+
+agv_cartographer.zip
+修改源码的cartographer建图定位算法
+
+agv_hqcartest.zip
+总压缩包
+
+
+start_navigation.sh
+建图脚本
+
+save_map.sh
+地图保存脚本
+

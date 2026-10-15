@@ -1,0 +1,34 @@
+# ===== ROS / catkin =====
+**/build/
+**/devel/
+**/install/
+**/logs/
+**/.catkin_tools/
+**/CATKIN_IGNORE
+*.pyc
+**/__pycache__/
+
+# ===== IDE / OS =====
+**/.vscode/
+**/.idea/
+*.user
+.DS_Store
+Thumbs.db
+
+# ===== 地图策略：只上传默认演示地图 map16 =====
+# 其余 .pgm 体积大、多为实验备份，本地保留即可，不要进 Git
+agv_hqcartest/src/car_top/map/**/*.pgm
+!agv_hqcartest/src/car_top/map/map16.pgm
+
+# 子目录里的重复/备份地图整夹忽略
+agv_hqcartest/src/car_top/map/1/
+agv_hqcartest/src/car_top/map/优化1/
+agv_hqcartest/src/car_top/map/完整地图/
+
+# Cartographer 状态文件（若有）
+*.pbstream
+
+# 源码压缩包（与仓库内容重复，体积大，不要上传）
+*.zip
+agv_cartographer.zip
+agv_hqcartest.zip

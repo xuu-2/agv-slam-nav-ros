@@ -1,0 +1,6 @@
+uint16 accele_x_data
+uint16 accele_y_data
+uint16 accele_z_data
+uint16 gyros_x_data
+uint16 gyros_y_data
+uint16 gyros_z_data

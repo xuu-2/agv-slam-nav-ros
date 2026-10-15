@@ -1,0 +1,16 @@
+<launch>
+    <!-- 全局参数 -->
+    <arg name="odom_frame_id" default="odom" /> <!-- 设置里程计话题起点TF坐标 -->
+    <!-- 主控制节点，启动这个launch文件之后，将启动住控制的节点，respawn作用是为了节点发生异常之后重新启动，false不会重新启动-->
+    <node pkg="car_top" type="pub_car_odom" name="pub_car_odom" output="screen" respawn="false">
+        <!-- 开始设置局部的参数服务器，这个参数服务器只对这个node  起作用-->
+        <!-- odom坐标系 -->
+        <param name="odom_frame_id" type="string" value="$(arg odom_frame_id)" />
+        <!-- 机器人的主坐标 -->
+        <param name="hq_robot_frame_id" type="string" value="base_footprint" />
+        <!-- imu话题对应的坐标系 -->
+        <param name="hq_gyro_frame_id" type="string" value="gyro_link" />
+    </node>
+    <include file ="$(find hq_car_description)/launch/car.launch" >
+    </include>
+</launch>

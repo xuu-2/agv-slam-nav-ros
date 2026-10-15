@@ -1,0 +1,30 @@
+<launch>
+  <arg name="repeat" default="false" />
+
+
+  <!-- base_footprint → base_link （保持兼容性） -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_link"
+        args="0 0 0 0 0 0 base_footprint base_link 10" />
+
+  <!-- 雷达安装位置：前方0.3m，高度0.35m，可根据实际修改 -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser"
+        args="0.25 0 0.25 0 0 0 base_footprint rslidar 10" />
+
+  <!-- 摄像头安装位置：前方0.25m，高度0.2m
+  <node pkg="tf" type="static_transform_publisher" name="base_to_camera"
+        args="0.25 0 0.20 0 0 0 base_footprint camera_link 10" /> -->
+
+  <!-- IMU 安装位置：与 pub_car_odom.cpp 的 gyro_frame_id 一致（默认 gyro_link） -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_gyro"
+        args="0 0 0 0 0 0 base_footprint gyro_link 10" />
+
+  <!-- 左右轮TF（两轮差速底盘） -->
+  <!-- 左轮在左侧 y=+0.17m，轴心位置 x=0（根据 wheel_base=0.35 推算） -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_left_wheel"
+        args="0 0.25 0 0 0 0 base_footprint left_wheel_link 10" />
+
+  <!-- 右轮在右侧 y=-0.17m -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_right_wheel"
+        args="0 -0.25 0 0 0 0 base_footprint right_wheel_link 10" />
+
+</launch>

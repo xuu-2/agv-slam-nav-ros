@@ -1,0 +1,6 @@
+float64 back_wheel_speed
+float64 turn_angle
+char battery_level
+char error_flag
+float64 left_speed
+float64 right_speed

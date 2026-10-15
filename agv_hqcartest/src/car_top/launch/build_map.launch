@@ -1,0 +1,41 @@
+<launch>
+    <arg name="repeat" default="false" />
+    <!-- <arg name="repeat" default="false" /> -->
+    <!-- 这个launch文件主要用于建图 -->
+    <!-- mapping_mode为全局参数 -->
+    <arg name="mapping_mode" default="gmapping" doc="opt: gmapping,hector,cartographer,karto" />
+    <!-- 是否在建图时开启导航 默认不开启 仅在rrt自主建图时同时进行-->
+    <arg name="navigation" default="false" />
+    <!-- odom_combined是由发布的里程计话题 -->
+    <arg name="odom_frame_id" default="odom" />
+    <include file ="$(find hq_car_description)/launch/car.launch" >
+    </include>
+
+    <!-- 开启激光雷达控制节点 -->
+
+
+
+
+    <!-- 将3D点云转换成2D -->
+    <include file = "$(find pointcloud_to_laserscan)/launch/point_to_scan.launch">
+    </include>
+
+    <!-- 开启IMU控制节点发布imu的TF变换 -->
+    <include file = "$(find wit_ros_imu)/launch/display_and_imu.launch">     
+    </include>
+
+    <!-- 扩张卡尔曼滤波 发布odom_combined到footprint的TF,即小车定位 使用cartographer算法时不使用该滤波算法 -->
+    <include file="$(find car_top)/launch/include/ros_pose_ekf.launch"
+        unless="$(arg repeat)">
+        <!-- 果 repeat 参数的值为 true 或者非空字符串，那么 robot_pose_ekf.launch 将不会被包含。换句话说，
+        只有在 repeat 参数为 false 或者空字符串时，robot_pose_ekf.launch 才会被包含进来。 -->
+        <!-- <arg name="is_cartographer" value="$(arg is_cartographer)" /> -->
+    </include>
+
+    <!-- 使用gmapping建图 -->
+    <group if="$(eval mapping_mode == 'gmapping')">
+        <include file="$(find car_top)/launch/include/mapping.launch" >
+        </include>
+
+    </group>    
+</launch>

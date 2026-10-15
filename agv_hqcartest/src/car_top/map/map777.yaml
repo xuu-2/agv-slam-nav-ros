@@ -1,0 +1,6 @@
+image: /home/ev/hqcartest/src/car_top/map/map777.pgm
+resolution: 0.05
+origin: [-147.7, -76.5537, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196

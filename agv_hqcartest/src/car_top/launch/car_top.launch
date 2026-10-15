@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="car_top" type="car_top" name="car_top">
+    <param name="Vz_bias"    type="double"  value="0.1"/>
+  </node>
+  <include file="$(find car_top)/launch/include/base_serial.launch" >
+  </include>
+</launch>
